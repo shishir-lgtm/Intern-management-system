@@ -31,7 +31,7 @@ function addnewIntern(newIntern) {
     console.log("Intern with this ID already exists.");
   } else {
     interns.push(newIntern);
-    console.log("New intern added:", interns);
+    console.log("New intern added:", newIntern);
   }
 }
 // Read the Intern data

@@ -67,7 +67,8 @@ The application includes separate validation functions to ensure data consistenc
 
 ## Screen Recording
 
-[Watch the project demonstration](ADD_RECORDING_LINK_HERE)
+[Watch the project demonstration]
+https://drive.google.com/file/d/18TozZvYcTyodBjqJ-tyKekEW6DcEIf76/view?usp=drivesdk
 
 ## Author
 
