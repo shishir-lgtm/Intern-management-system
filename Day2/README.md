@@ -7,12 +7,14 @@ A console-based E-commerce Shopping Cart System built using Vanilla JavaScript a
 ## Features
 
 ### 1. Product Management
+
 - Display all available products.
 - Search products by ID.
 - Filter products by category.
 - Sort products by price in ascending or descending order.
 
 ### 2. Cart Management
+
 - Add products to the shopping cart.
 - Remove products from the cart.
 - Update product quantities.
@@ -23,17 +25,19 @@ A console-based E-commerce Shopping Cart System built using Vanilla JavaScript a
 
 ### 3. Discount and Coupon System
 
-| Coupon Code | Discount | Minimum Subtotal |
-|---|---:|---:|
-| SAVE10 | 10% | ₹1,000 |
-| SAVE20 | 20% | ₹5,000 |
-| FLAT500 | ₹500 flat discount | ₹3,000 |
+| Coupon Code |           Discount | Minimum Subtotal |
+| ----------- | -----------------: | ---------------: |
+| SAVE10      |                10% |           ₹1,000 |
+| SAVE20      |                20% |           ₹5,000 |
+| FLAT500     | ₹500 flat discount |           ₹3,000 |
 
 ### 4. Shipping Calculation
+
 - Orders below ₹1,000 have a shipping charge of ₹100.
 - Orders of ₹1,000 or above qualify for free shipping.
 
 ### 5. Order Summary
+
 - Generate a unique Order ID.
 - Display purchased products and quantities.
 - Calculate subtotal.
@@ -42,6 +46,7 @@ A console-based E-commerce Shopping Cart System built using Vanilla JavaScript a
 - Display the final payable amount.
 
 ### 6. Validation and Error Handling
+
 - Validate product IDs and quantities.
 - Validate coupon codes and minimum purchase requirements.
 - Validate cart data.
@@ -54,9 +59,11 @@ The following screen recording demonstrates project execution, implemented funct
 
 **Google Drive – Project Demonstration and Testing:**
 
-[Watch the Day 2 Screen Recording](PASTE_YOUR_GOOGLE_DRIVE_LINK_HERE)
+[Watch the Day 2 Screen Recording]
+https://drive.google.com/file/d/1s9a5hiPg0CTNYuUklwk_e0MTBbk4yGJf/view?usp=drivesdk
 
 The demonstration covers:
+
 - Product display, search, filtering, and sorting.
 - Adding, removing, and updating cart items.
 - Cart quantity and inventory updates.
@@ -67,6 +74,7 @@ The demonstration covers:
 ## Project Structure
 
 Day2/
+
 - data/
   - products.js
   - cart.js
@@ -112,7 +120,6 @@ Navigate to the Day2 directory and run:
 ## Learning Objective
 
 The objective of this project is to understand how multiple JavaScript modules work together to build a small application, manage shared data, perform CRUD operations, implement business logic, and handle validations and edge cases.
-
 
 **Project:** Day 2 – E-commerce Shopping Cart System  
 **Challenge:** 30 Days – 30 JavaScript Projects
