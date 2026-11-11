@@ -1,8 +1,11 @@
-import { products } from "./data/products.js";
-import { cart } from "./data/cart.js";
+import { products } from "../../data/products.js";
+import { cart } from "../../data/cart.js";
 
-import { isValidQuantity, isValidProductId } from "./utils/valiadtion.js";
-import { validateCart } from "./utils/cartValiadtion.js";
+import {
+  isValidQuantity,
+  isValidProductId,
+} from "../../utils/validations/valiadtion.js";
+import { validateCart } from "../../utils/validations/cartValiadtion.js";
 // Common cart validation utility
 function checkCartValidity() {
   const result = validateCart(cart, products);

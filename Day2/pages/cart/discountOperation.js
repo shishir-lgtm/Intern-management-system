@@ -3,7 +3,7 @@ import {
   isValidString,
   isValidPrice,
   isValidQuantity,
-} from "./utils/valiadtion.js";
+} from "../../utils/validations/valiadtion.js";
 // Available coupons
 const coupons = {
   SAVE10: {

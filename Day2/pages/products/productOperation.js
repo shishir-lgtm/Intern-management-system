@@ -1,27 +1,32 @@
-import { products } from "./data/products.js";
-
+import { productCard } from "./productCard.js";
+import { products } from "../../data/products.js";
 import {
   isValidProductId,
   isValidString,
   isValidArray,
   isValidSortOrder,
-} from "./utils/valiadtion.js";
+} from "../../utils/validations/valiadtion.js";
 // Display all produexport cts
+
 export function displayProducts(productsToDisplay = products) {
   if (!isValidArray(productsToDisplay)) {
     console.log("Invalid products data. Expected an array.");
     return;
   }
-  console.table(
-    productsToDisplay.map((product) => ({
-      "Product ID": product.id,
-      "Product Name": product.name,
-      "Product Category": product.category,
-      "Product Price": product.price,
-      "Product Stock": product.stock,
-      "Product Availability": product.availability,
-    })),
-  );
+
+  const productsContainer = document.querySelector("#products-container");
+
+  if (!productsContainer) {
+    console.log("Products container not found.");
+    return;
+  }
+
+  productsContainer.innerHTML = productsToDisplay
+    .map((product) => {
+      const isOutOfStock = product.stock <= 0 || !product.availability;
+      return productCard(product, isOutOfStock);
+    })
+    .join("");
 }
 
 // Search product byexport  ID

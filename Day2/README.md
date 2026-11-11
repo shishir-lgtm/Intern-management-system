@@ -123,3 +123,57 @@ The objective of this project is to understand how multiple JavaScript modules w
 
 **Project:** Day 2 – E-commerce Shopping Cart System  
 **Challenge:** 30 Days – 30 JavaScript Projects
+//scipt file 
+import {
+  displayProducts,
+  searchProductById,
+  filterProductsByCategory,
+  sortProductsByPrice,
+} from "./productOperation.js";
+
+import {
+  addToCart,
+  removeFromCart,
+  updateCart,
+  viewCart,
+} from "./cartOperation.js";
+
+// Import the SAME cart array used by cartOperation.js.
+// Adjust this path to wherever your cart is actually declared.
+import { cart } from "./data/cart.js";
+
+// Select HTML elements
+const productsContainer = document.querySelector("#products-container");
+const viewCartButton = document.querySelector("#view-cart");
+
+// Update cart count in the header
+function updateCartCount() {
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
+  viewCartButton.textContent = `Cart (${totalQuantity})`;
+}
+
+// Display products when the page loads
+displayProducts();
+
+// Display initial cart count
+updateCartCount();
+
+// Event delegation for Add to Cart buttons
+productsContainer.addEventListener("click", (event) => {
+  const button = event.target.closest("button.add-to-cart");
+
+  if (!button) return;
+
+  // Get product ID from the clicked button
+  const productId = Number(button.dataset.productId);
+
+  // Add one product to cart
+  addToCart(productId, 1);
+
+  // Refresh product cards to show updated stock
+  displayProducts();
+
+  // Refresh cart count
+  updateCartCount();
+});

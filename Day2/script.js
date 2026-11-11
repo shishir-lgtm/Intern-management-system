@@ -1,54 +1,48 @@
-import {
-  displayProducts,
-  searchProductById,
-  filterProductsByCategory,
-  sortProductsByPrice,
-} from "./productOperation.js";
+import { displayProducts } from "./pages/products/productOperation.js";
+import { addToCart } from "./pages/cart/cartOperation.js";
+import { cart } from "./data/cart.js";
+import { loadCart, saveCart } from "./utils/cartStorage.js";
 
-import {
-  addToCart,
-  removeFromCart,
-  updateCart,
-  viewCart,
-} from "./cartOperation.js";
+const viewCartButton = document.querySelector("#view-cart");
+const productsContainer = document.querySelector("#products-container");
 
-import { generateOrderSummary } from "./orderSummary.js";
+function updateCartCount() {
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+  viewCartButton.textContent = `Cart (${totalQuantity})`;
+}
 
-// =================================
-// PRODUCT OPERATIONS
-// =================================
+// Re-read the cart from storage and redraw everything
+function syncFromStorage() {
+  loadCart();
+  displayProducts();
+  updateCartCount();
+}
 
-console.log("\n========== PRODUCT OPERATIONS ==========");
+// // Open cart on a new page
+// viewCartButton.addEventListener("click", () => {
+//   window.location.href = "cart.html";
+// });
 
-displayProducts();
+// Add to cart
+productsContainer.addEventListener("click", (event) => {
+  const button = event.target.closest("button.add-to-cart");
+  if (!button) return;
 
-searchProductById(101);
+  addToCart(Number(button.dataset.productId), 1);
+  saveCart();
+  displayProducts();
+  updateCartCount();
+});
 
-filterProductsByCategory("Electronics");
+// Initial load
+syncFromStorage();
 
-sortProductsByPrice("asc");
+// Page restored from the back/forward cache (Back button)
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) syncFromStorage();
+});
 
-// =================================
-// CART OPERATIONS
-// =================================
-
-console.log("\n========== CART OPERATIONS ==========");
-
-addToCart(101, 2);
-addToCart(103, 3);
-
-viewCart();
-
-updateCart(101, 1);
-
-removeFromCart(103, 1);
-
-viewCart();
-
-// =================================
-// ORDER SUMMARY
-// =================================
-
-console.log("\n========== ORDER SUMMARY ==========");
-
-generateOrderSummary("SAVE10");
+// Cart changed in another tab
+window.addEventListener("storage", (event) => {
+  if (event.key === "cart") syncFromStorage();
+});
