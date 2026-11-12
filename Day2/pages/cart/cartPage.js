@@ -5,25 +5,45 @@ import { loadCart, saveCart } from "../../utils/cartStorage.js";
 
 document.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action][data-product-id]");
+
   if (!button) return;
 
   const productId = Number(button.dataset.productId);
   const item = cart.find((i) => i.productId === productId);
   if (!item) return;
 
+  const messageElement = document.querySelector("#cart-message");
+  let result;
+
   switch (button.dataset.action) {
     case "increase":
-      addToCart(productId, 1);
+      result = addToCart(productId, 1);
       break;
+
     case "decrease":
-      removeFromCart(productId, 1);
+      if (item.quantity <= 1) {
+        messageElement.textContent =
+          "Minimum quantity is 1. Use Remove to delete the product.";
+        return;
+      }
+
+      result = removeFromCart(productId, 1);
       break;
+
     case "remove":
-      removeFromCart(productId, item.quantity);
+      result = removeFromCart(productId, item.quantity);
       break;
+
     default:
       return;
   }
+
+  if (!result.success) {
+    messageElement.textContent = result.message;
+    return;
+  }
+
+  messageElement.textContent = "";
 
   saveCart();
   displayCart();

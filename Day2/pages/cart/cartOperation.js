@@ -21,24 +21,24 @@ function checkCartValidity() {
 // Add to cart
 export function addToCart(productId, quantity) {
   if (!isValidProductId(productId) || !isValidQuantity(quantity)) {
-    console.log("Invalid product ID or quantity.");
-    return;
+    return { success: false, message: "Invalid product ID or quantity." };
   }
 
-  if (!checkCartValidity()) return;
+  if (!checkCartValidity()) {
+    return { success: false, message: "Cart validation failed." };
+  }
 
   const product = products.find((product) => product.id === productId);
 
   if (!product) {
-    console.log(`Product with ID ${productId} not found.`);
-    return;
+    return { success: false, message: "Product not found." };
   }
 
   if (product.stock < quantity) {
-    console.log(
-      `Insufficient stock for ${product.name}. Available stock: ${product.stock}`,
-    );
-    return;
+    return {
+      success: false,
+      message: `Maximum stock reached for ${product.name}.`,
+    };
   }
 
   const existingProduct = cart.find((item) => item.productId === productId);
@@ -56,33 +56,37 @@ export function addToCart(productId, quantity) {
 
   product.stock -= quantity;
 
-  console.log(`Added ${quantity} of ${product.name} to cart.`);
+  return { success: true };
 }
 
 // Remove from cart
 export function removeFromCart(productId, quantity) {
   if (!isValidProductId(productId) || !isValidQuantity(quantity)) {
-    console.log("Invalid product ID or quantity.");
-    return;
+    return { success: false, message: "Invalid product ID or quantity." };
   }
 
-  if (!checkCartValidity()) return;
+  if (!checkCartValidity()) {
+    return { success: false, message: "Cart validation failed." };
+  }
 
   const existingProduct = cart.find((item) => item.productId === productId);
 
   if (!existingProduct) {
-    console.log(`Product with ID ${productId} not found in cart.`);
-    return;
+    return { success: false, message: "Product not found in cart." };
   }
 
   if (existingProduct.quantity < quantity) {
-    console.log(
-      `Cannot remove ${quantity}. Only ${existingProduct.quantity} available in cart.`,
-    );
-    return;
+    return {
+      success: false,
+      message: "Invalid quantity reduction.",
+    };
   }
 
   const product = products.find((item) => item.id === productId);
+
+  if (!product) {
+    return { success: false, message: "Product not found." };
+  }
 
   existingProduct.quantity -= quantity;
   product.stock += quantity;
@@ -92,7 +96,7 @@ export function removeFromCart(productId, quantity) {
     cart.splice(index, 1);
   }
 
-  console.log(`Removed ${quantity} of ${product.name} from cart.`);
+  return { success: true };
 }
 
 // Update cart quantity

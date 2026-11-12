@@ -4,7 +4,7 @@ export const products = [
     name: "Laptop",
     category: "Electronics",
     price: 55000,
-    stock: 10,
+    stock: 3,
     availability: true,
   },
   {

@@ -1,13 +1,14 @@
 import { productCard } from "./productCard.js";
 import { products } from "../../data/products.js";
+
 import {
   isValidProductId,
   isValidString,
   isValidArray,
   isValidSortOrder,
 } from "../../utils/validations/valiadtion.js";
-// Display all produexport cts
 
+// Display products on the UI
 export function displayProducts(productsToDisplay = products) {
   if (!isValidArray(productsToDisplay)) {
     console.log("Invalid products data. Expected an array.");
@@ -21,6 +22,11 @@ export function displayProducts(productsToDisplay = products) {
     return;
   }
 
+  if (productsToDisplay.length === 0) {
+    productsContainer.innerHTML = "<p>No products found.</p>";
+    return;
+  }
+
   productsContainer.innerHTML = productsToDisplay
     .map((product) => {
       const isOutOfStock = product.stock <= 0 || !product.availability;
@@ -29,16 +35,35 @@ export function displayProducts(productsToDisplay = products) {
     .join("");
 }
 
-// Search product byexport  ID
+// Search products by name or ID
+export function searchProducts(query, productsToSearch = products) {
+  if (typeof query !== "string") {
+    console.log("Search query must be a string.");
+    return [];
+  }
+
+  if (!isValidArray(productsToSearch)) return [];
+
+  const searchTerm = query.trim().toLowerCase();
+
+  if (!searchTerm) return productsToSearch;
+
+  return productsToSearch.filter((product) => {
+    return (
+      product.name.toLowerCase().includes(searchTerm) ||
+      String(product.id).includes(searchTerm)
+    );
+  });
+}
+
+// Search product by ID (existing console utility)
 export function searchProductById(id) {
   if (!isValidProductId(id)) {
     console.log("Please provide a valid product ID.");
     return;
   }
 
-  const product = products.find((product) => {
-    return product.id === id;
-  });
+  const product = products.find((product) => product.id === id);
 
   if (product) {
     console.table({
@@ -55,47 +80,34 @@ export function searchProductById(id) {
 }
 
 // Filter products by category
-export function filterProductsByCategory(category) {
+export function filterProductsByCategory(
+  category,
+  productsToFilter = products,
+) {
+  if (!isValidArray(productsToFilter)) return [];
+
+  if (category === "all") return productsToFilter;
+
   if (!isValidString(category)) {
     console.log("Please provide a valid category.");
-    return;
+    return [];
   }
 
-  const filteredProducts = products.filter((product) => {
+  return productsToFilter.filter((product) => {
     return product.category.toLowerCase() === category.trim().toLowerCase();
   });
-
-  if (filteredProducts.length > 0) {
-    console.table(
-      filteredProducts.map((product) => ({
-        "Product ID": product.id,
-        "Product Name": product.name,
-        "Product Category": product.category,
-        "Product Price": product.price,
-        "Product Stock": product.stock,
-        "Product Availability": product.availability,
-      })),
-    );
-  } else {
-    console.log(`No products found in category: ${category}`);
-  }
 }
 
 // Sort products by price
-export function sortProductsByPrice(order) {
+export function sortProductsByPrice(order, productsToSort = products) {
+  if (!isValidArray(productsToSort)) return [];
+
   if (!isValidSortOrder(order)) {
     console.log("Invalid order. Please use 'asc' or 'desc'.");
-    return;
+    return [...productsToSort];
   }
 
-  if (order === "asc") {
-    const shorted = [...products].sort((a, b) => a.price - b.price);
-    displayProducts(shorted);
-  } else if (order === "desc") {
-    const sorted = [...products].sort((a, b) => b.price - a.price);
-    displayProducts(sorted);
-  }
+  return [...productsToSort].sort((a, b) => {
+    return order === "asc" ? a.price - b.price : b.price - a.price;
+  });
 }
-displayProducts();
-filterProductsByCategory("Electronics");
-sortProductsByPrice("asc");

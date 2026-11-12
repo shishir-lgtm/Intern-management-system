@@ -86,10 +86,10 @@ main h2 {
   background-color: #4a4f60;
 }
 /* Disabled button */
-/* .add-to-cart:disabled {
+ .add-to-cart:disabled {
   background-color: #999;
   cursor: not-allowed;
-} */
+} 
  
 /* Cart section */
 #cart-section {
@@ -187,5 +187,57 @@ main h2 {
   color: white;
   text-decoration: none;
   border-radius: 5px;
+}
+
+/* Product search, filter and sort controls */
+.product-controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.product-controls input,
+.product-controls select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background-color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.product-controls input:focus,
+.product-controls select:focus {
+  border-color: #24272d;
+  box-shadow: 0 0 0 2px rgba(36, 39, 45, 0.1);
+}
+
+.product-controls input::placeholder {
+  color: #888;
+}
+
+/* Empty search/filter results */
+#products-container > p {
+  color: #666;
+  padding: 20px 0;
+  grid-column: 1 / -1;
+}
+
+/* Responsive controls */
+@media (max-width: 650px) {
+  .product-controls {
+    grid-template-columns: 1fr;
+  }
+
+  header {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  header h1 {
+    font-size: 22px;
+  }
 }
 
