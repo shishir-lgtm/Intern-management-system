@@ -44,7 +44,18 @@ function syncFromStorage() {
   renderProducts();
   updateCartCount();
 }
+function debounce(callback, delay) {
+  let timer;
 
+  return function (...args) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+}
+const debounceSearch = debounce(renderProducts, 500);
 searchInput.addEventListener("input", renderProducts);
 
 categoryFilter.addEventListener("change", renderProducts);
