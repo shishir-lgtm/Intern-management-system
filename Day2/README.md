@@ -60,8 +60,7 @@ The following screen recording demonstrates project execution, implemented funct
 **Google Drive – Project Demonstration and Testing:**
 
 [Watch the Day 2 Screen Recording]
-https://drive.google.com/file/d/1s9a5hiPg0CTNYuUklwk_e0MTBbk4yGJf/view?usp=drivesdk
-
+https://drive.google.com/file/d/1bJc01_sEjyBfpOvrYpbGjWBoYQjkvk28/view?usp=drivesdk
 The demonstration covers:
 
 - Product display, search, filtering, and sorting.
@@ -123,19 +122,19 @@ The objective of this project is to understand how multiple JavaScript modules w
 
 **Project:** Day 2 – E-commerce Shopping Cart System  
 **Challenge:** 30 Days – 30 JavaScript Projects
-//scipt file 
+//scipt file
 import {
-  displayProducts,
-  searchProductById,
-  filterProductsByCategory,
-  sortProductsByPrice,
+displayProducts,
+searchProductById,
+filterProductsByCategory,
+sortProductsByPrice,
 } from "./productOperation.js";
 
 import {
-  addToCart,
-  removeFromCart,
-  updateCart,
-  viewCart,
+addToCart,
+removeFromCart,
+updateCart,
+viewCart,
 } from "./cartOperation.js";
 
 // Import the SAME cart array used by cartOperation.js.
@@ -148,9 +147,9 @@ const viewCartButton = document.querySelector("#view-cart");
 
 // Update cart count in the header
 function updateCartCount() {
-  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
-  viewCartButton.textContent = `Cart (${totalQuantity})`;
+viewCartButton.textContent = `Cart (${totalQuantity})`;
 }
 
 // Display products when the page loads
@@ -161,19 +160,19 @@ updateCartCount();
 
 // Event delegation for Add to Cart buttons
 productsContainer.addEventListener("click", (event) => {
-  const button = event.target.closest("button.add-to-cart");
+const button = event.target.closest("button.add-to-cart");
 
-  if (!button) return;
+if (!button) return;
 
-  // Get product ID from the clicked button
-  const productId = Number(button.dataset.productId);
+// Get product ID from the clicked button
+const productId = Number(button.dataset.productId);
 
-  // Add one product to cart
-  addToCart(productId, 1);
+// Add one product to cart
+addToCart(productId, 1);
 
-  // Refresh product cards to show updated stock
-  displayProducts();
+// Refresh product cards to show updated stock
+displayProducts();
 
-  // Refresh cart count
-  updateCartCount();
+// Refresh cart count
+updateCartCount();
 });
